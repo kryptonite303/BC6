@@ -1,19 +1,59 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-  <script src="fbsdkinit.js"></script>
+  <script type="text/javascript" src="//connect.facebook.net/en_US/sdk.js"></script>
 </head>
 <body>
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '210049219391674', //Replace your-app-id with actual app-id
+        xfbml      : true,
+        version    : 'v2.7'
+      });
+
+
+    };
+
+    function statusChangeCallback(response){
+      console.log('statusChangeCallback');
+      console.log(response);
+      if(response.status === 'connected'){
+        testAPI();
+      } else if (response.status === 'not_authorized'){
+        document.getElementById('status').innerHTML = 'Please log ' + 'into this app.';
+      } else {
+        document.getElementById('status').innerHTML = 'Please log ' + 'into Facebook.';
+      }
+    }
+
+    function checkLoginState() {
+      FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+      });
+    }
+
+    (function(d, s, id){
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    function testAPI() {
+      console.log('Welcome!  Fetching your information.... ');
+        FB.api('/me', function(response) {
+            console.log('Successful login for: ' + response.name);
+            document.getElementById('status').innerHTML =
+            'Thanks for logging in, ' + response.name + '!';
+        });
+}
+  </script>
   <h1> Hello World! </h1>
   <br/>
-  <p>Click the button below to trigger a Share Dialog</p>
-
+  <!--Share button-->
   <button id="shareBtn" class="btn btn-success clearfix">Share</button>
-
-  <p style="margin-top: 50px">
-    <hr />
-    <a class="btn btn-small"  href="https://developers.facebook.com/docs/sharing/reference/share-dialog">Share Dialog Documentation</a>
-  </p>
 
   <script>
   document.getElementById('shareBtn').onclick = function() {
@@ -27,28 +67,26 @@
   }
   </script>
 
-  <script>
-    FB.getLoginStatus(function(response){
-      if(response.status === 'connected')
-        console.log('Logged In');
-      else
-        FB.login();
-    });
-  </script>
+  <br/> <br/>
+
+
+
+
+  <!--Facebook login button-->
+  <div id="fb-root"></div>
+  <!--<div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="true"></div-->
+  <fb:login-button scope="public_profile,email,user_posts" onlogin="checkLoginState();">
+</fb:login-button>
+
+
+
+
+
+
+
+
+
+
 
 </body>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </html>
