@@ -93,6 +93,9 @@
     function (response) {
       if (response && !response.error) {
         console.log(response);
+        for (var i = 0; i < response.data.length; i++) {
+          document.getElementById("statuses").innerHTML = document.getElementById("statuses").innerHTML + response.data[i].message + (response.data[i].story ? response.data[i].story : "") + "</br>"; 
+        }
       }
     }
 );
@@ -110,6 +113,8 @@
 
 <div id="status">
 </div>
+
+<div id="statuses"></div>
 
 </body>
 </html>
