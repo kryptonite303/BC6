@@ -2,53 +2,79 @@
 <html>
 <head>
   <script src="fbsdkinit.js"></script>
+  <script> </script>
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel='stylesheet' href='main.css'>
 </head>
+<header>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">BC6</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Home<span class="sr-only">(current)</span></a></li>
+          <li><a href="#">DAP</a></li>
+          <li><a href="#">180 Church</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+
+</header>
 <body>
-  <h1> Hello World! </h1>
-  <br/>
-  <p>Click the button below to trigger a Share Dialog</p>
+  <div class='main-box'>
+  <div class='col-md-4'>
+    <div class="panel panel-primary">
 
-  <button id="shareBtn" class="btn btn-success clearfix">Share</button>
+        <div class="panel-heading">
+          <h3 class="panel-title">Login and Share</h3>
+        </div>
 
-  <p style="margin-top: 50px">
-    <hr />
-    <a class="btn btn-small"  href="https://developers.facebook.com/docs/sharing/reference/share-dialog">Share Dialog Documentation</a>
-  </p>
+        <div class="panel-body">
+            <div id="shareBtn" class="fb-share-button" onclick='shareButton()'>Share</div>
+  <div class="fb-login-button"scope="public_profile,email,user_posts" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="true" onlogin='showMyName' { alert.dialog("Successful login");}></div>
+        </div>
+    </div>
+  </div>
+  </div>
 
-  <script>
-  document.getElementById('shareBtn').onclick = function() {
-    FB.ui(
-      {
-        method: 'share',
-        display: 'popup',
-        href: 'https://developers.facebook.com/docs/',
-      }, function(response){}
-    );
-  }
-  </script>
+  <button name="my_full_name" onclick="ShowMyName()" value="My Name">Show API</button>
+<script language="javascript" type="text/javascript">
+function showMyName() {
+        FB.api("/me?fields=id,name,books",
+                function (response) {
+                    document.getElementById('write').innerHTML = ('Name is ' + response.name);
+                    document.getElementById('write2').innerHTML = ('ID is ' + response.id);
+                });
+        FB.api("/me/feed",
+                function (response){
+                  document.getElementById('write3').innerHTML = ('Test 2 is ' + response.books);
+                }
+          );
 
-  <script>
-    FB.getLoginStatus(function(response){
-      if(response.status === 'connected')
-        console.log('Logged In');
-      else
-        FB.login();
-    });
-  </script>
+    }
+</script>
+
+<div id='write'>
+</div>
+<div id='write2'>
+</div>
+<div id='write3'>
+</div>  
 
 </body>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </html>
